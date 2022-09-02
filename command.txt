@@ -8,3 +8,7 @@ ffmpeg -hide_banner -stream_loop -1 -re -i "F:\test.mp4" -c:a aac -c:v h264 -g 4
 
 Download streaming to mp4:
 ffmpeg -i "http://host/folder/file.m3u8" -bsf:a aac_adtstoasc -vcodec copy -c copy -crf 50 file.mp4
+
+or
+
+ffmpeg -i "http://host/folder/file.m3u8" -c copy file.mp4
