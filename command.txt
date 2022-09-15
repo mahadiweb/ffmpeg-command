@@ -1,14 +1,19 @@
-Restreaming:
-ffmpeg -i "http://link.com:8001/1.m3u8" -ar 44100 -vcodec libx264 -r 25 -b:v 500k -f flv rtmp://address:1935/live/stream;
+*Restreaming*:
+  ffmpeg -i "http://link.com:8001/1.m3u8" -ar 44100 -vcodec libx264 -r 25 -b:v 500k -f flv rtmp://address:1935/live/stream;
 
 
-Local file streaming:
-ffmpeg -hide_banner -stream_loop -1 -re -i "F:\test.mp4" -c:a aac -c:v h264 -g 48 -f flv rtmp://localhost:1935/hls/live
+*Local file streaming*:
+  ffmpeg -hide_banner -stream_loop -1 -re -i "F:\test.mp4" -c:a aac -c:v h264 -g 48 -f flv rtmp://localhost:1935/hls/live
 
 
-Download streaming to mp4:
-ffmpeg -i "http://host/folder/file.m3u8" -bsf:a aac_adtstoasc -vcodec copy -c copy -crf 50 file.mp4
+*Download streaming to mp4*:
+  ffmpeg -i "http://host/folder/file.m3u8" -bsf:a aac_adtstoasc -vcodec copy -c copy -crf 50 file.mp4
 
 or
 
-ffmpeg -i "http://host/folder/file.m3u8" -c copy file.mp4
+  ffmpeg -i "http://host/folder/file.m3u8" -c copy file.mp4
+
+
+*Logo overlay add*
+-i (video source) -i (logo source) -filter_complex (Video size=[1:v]scale=80:50 [ovrl],[0:v][ovrl] video position=overlay=main_w-(overlay_w+10):10)
+  ffmpeg -i "video.mp4" -i "img.png" -filter_complex "[1:v]scale=80:50 [ovrl],[0:v][ovrl]overlay=main_w-(overlay_w+10):10" -c:a aac -c:v h264 -g 48 -f flv rtmp://localhost:1935/hls/live
